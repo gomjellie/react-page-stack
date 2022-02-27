@@ -1,0 +1,53 @@
+:root {
+  --blue-100: #007aff;
+  --blue-50: #1272d5;
+  --white-100: #ffffff;
+  --gray-100: #98979b;
+  --gray-200: #1c1c1e;
+  --list-border-color: rgba(255, 255, 255, 0.22);
+}
+
+html,
+body {
+  padding: 0;
+  width: 100vw;
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+#root {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  height: -webkit-fill-available;
+  /* height: calc(100vh - env(safe-area-inset-bottom));
+  height: calc(100vh - constant(safe-area-inset-bottom)); */
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 480px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.App {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
