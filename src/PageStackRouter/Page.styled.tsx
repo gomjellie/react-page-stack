@@ -65,6 +65,7 @@ const Page = styled.div<{ status?: string }>`
   &.recalling {
     animation: ${RecallingPageAnimation} 0.5s;
     animation-fill-mode: forwards;
+    pointer-events: none;
   }
 
   &.recalled {
@@ -77,6 +78,7 @@ const Page = styled.div<{ status?: string }>`
   &.leaving {
     animation: ${LeavingPageAnimation} 0.5s ease;
     animation-fill-mode: forwards;
+    pointer-events: none;
   }
 
   &.popping {
