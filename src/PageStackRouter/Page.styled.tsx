@@ -11,9 +11,9 @@ const EnteringPageAnimation = keyframes`
   }
 `;
 
-const PopPageAnimation = keyframes`
+const PopPageAnimation = (pageX?: number) => keyframes`
   0% {
-    transform: translateX(0);
+    transform: translateX(${pageX ?? 0});
   }
 
   100% {
@@ -21,9 +21,17 @@ const PopPageAnimation = keyframes`
   }
 `;
 
-const RecallingPageAnimation = keyframes`
+const RecallingPageAnimation = (
+  pageX?: number,
+  pageWidth?: number,
+  startX?: number
+) => keyframes`
   0% {
-    transform: translateX(-25%);
+    transform: translateX(${
+      pageX === undefined || pageWidth === undefined || startX === undefined
+        ? -25
+        : (25 * Math.max(pageX - startX, 0)) / pageWidth - 25
+    }%);
   }
 
   100% {
@@ -41,7 +49,11 @@ const LeavingPageAnimation = keyframes`
   }
 `;
 
-const Page = styled.div<{ status?: string }>`
+const Page = styled.div<{
+  pageX?: number;
+  pageWidth?: number;
+  startX?: number;
+}>`
   position: absolute;
   top: 0;
   left: 0;
@@ -62,8 +74,25 @@ const Page = styled.div<{ status?: string }>`
     animation-fill-mode: forwards;
   }
 
+  &.entered {
+    transition: none;
+  }
+
   &.recalling {
-    animation: ${RecallingPageAnimation} 0.5s;
+    animation: ${({ pageX, pageWidth, startX }) => {
+        // console.log(
+        //   `pageX: ${pageX}, pageWidth: ${pageWidth}, startX: ${startX}`
+        // );
+        if (
+          pageX !== undefined &&
+          pageWidth !== undefined &&
+          startX !== undefined
+        ) {
+          // console.log((25 * Math.max(pageX - startX, 0)) / pageWidth - 25);
+        }
+        return RecallingPageAnimation(pageX, pageWidth, startX);
+      }}
+      0.5s;
     animation-fill-mode: forwards;
     pointer-events: none;
   }
@@ -73,6 +102,7 @@ const Page = styled.div<{ status?: string }>`
 
   &.left {
     transform: translateX(-25%);
+    transition: none;
   }
 
   &.leaving {
@@ -82,7 +112,7 @@ const Page = styled.div<{ status?: string }>`
   }
 
   &.popping {
-    animation: ${PopPageAnimation} 0.5s ease;
+    animation: ${({ pageX }) => PopPageAnimation(pageX)} 0.5s ease;
     animation-fill-mode: forwards;
   }
 `;
