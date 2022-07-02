@@ -77,14 +77,11 @@ const PageStackRouter: FC<{ children?: ReactNode }> = ({ children }) => {
     const onTouchMove = (e: TouchEvent) => {
       const { pageX, clientX, screenX } = e.touches[0];
       if (startX > pageWidth * 0.25) return;
-      // console.log(`pageX: ${pageX}, clientX: ${clientX}, screenX: ${screenX}`);
-      requestAnimationFrame(() => {
-        const deltaX = Math.max(pageX - startX, 0);
-        $ref.style.transform = `translateX(${deltaX}px)`;
-        $prevRef.style.transform = `translateX(${
-          (25 * deltaX) / pageWidth - 25
-        }%)`;
-      });
+      const deltaX = Math.max(pageX - startX, 0);
+      $ref.style.transform = `translateX(${deltaX}px)`;
+      $prevRef.style.transform = `translateX(${
+        (25 * deltaX) / pageWidth - 25
+      }%)`;
     };
 
     const onTouchEnd = (e: TouchEvent) => {
@@ -94,19 +91,15 @@ const PageStackRouter: FC<{ children?: ReactNode }> = ({ children }) => {
       setPageX(pageX);
       setStartX(startX);
       setPageWidth(pageWidth);
-      // console.log(strtX, pageX, pageWidth);
-      // console.log(pageX);
-      requestAnimationFrame(() => {
-        if (pageX > pageWidth * 0.5 + startX) {
-          prevRef.current?.removeAttribute('style');
-          pop();
-        } else {
-          $ref.style.transform = ``;
-          $ref.style.transition = `all 0.3s ease`;
-          $prevRef.style.transform = ``;
-          $prevRef.style.transition = `all 0.3s ease`;
-        }
-      });
+      if (pageX > pageWidth * 0.5 + startX) {
+        prevRef.current?.removeAttribute('style');
+        pop();
+      } else {
+        $ref.style.transform = ``;
+        $ref.style.transition = `all 0.3s ease`;
+        $prevRef.style.transform = ``;
+        $prevRef.style.transition = `all 0.3s ease`;
+      }
     };
 
     $ref.addEventListener('touchstart', onTouchStart, { passive: true });
