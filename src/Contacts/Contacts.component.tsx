@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, useMemo } from 'react';
 import { Contacts } from './Contacts.styled';
 import { faker } from '@faker-js/faker';
 import { usePageStackRouter } from '../PageStackRouter';
@@ -27,7 +27,7 @@ const ContactComponent: FC<ContactProps> = ({ name }) => {
 
 const ContactsComponent: FC<ContactsProps> = (props) => {
   // generate 100 random contacts using faker
-  const [contacts] = useState(() => {
+  const contacts = useMemo(() => {
     const contacts = [];
     for (let i = 0; i < 100; i++) {
       contacts.push({
@@ -35,7 +35,7 @@ const ContactsComponent: FC<ContactsProps> = (props) => {
       });
     }
     return contacts.sort((a, b) => a.name.localeCompare(b.name));
-  });
+  }, []);
 
   return (
     <Contacts.Container>
